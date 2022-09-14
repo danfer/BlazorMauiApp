@@ -1,0 +1,47 @@
+﻿
+<EditForm Model="@todo">
+    <div class="mb-3">
+        <label for="todoItem" class="form-label">ToDo Item:</label>
+        <InputText @bind-Value="todo.ToDoItem" class="form-control" 
+            id="todoItem"/>
+        <button class="btn btn-primary" @onclick="AddToDo">Save</button>
+    </div>
+</EditForm>
+
+<h3>ToDo List</h3>
+<ul>
+    @foreach (var todo in todos)
+    {
+        <li class="mb-2">
+            @if (todo.IsComplete)
+            {
+                <span style="text-decoration: line-through">
+                    @todo.ToDoItem
+                </span>
+            }
+            else
+            {
+                @todo.ToDoItem
+                <button class="btn btn-warning btn-sm ms-3"
+                @onclick="() => todo.IsComplete = true">
+                    Complete
+                </button>
+
+            }
+        </li>       
+    }
+</ul>
+
+@code {
+    private List<TodoModel> todos = new();
+    private TodoModel todo = new();
+
+    private void AddToDo()
+    {
+        todos.Add(todo);
+        todo = new();
+    }
+    
+    
+
+}
